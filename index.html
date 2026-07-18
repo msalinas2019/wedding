@@ -65,8 +65,8 @@
     font-size:.6em;display:block;margin:6px 0;
   }
   .hero-date{
-    font-family:var(--serif);font-size:clamp(20px,3.5vw,26px);
-    font-style:italic;color:var(--olive);margin-top:30px;
+    font-family:var(--serif);font-size:clamp(21px,3.6vw,27px);
+    font-style:italic;font-weight:600;color:var(--olive);margin-top:30px;
   }
   .hero-place{
     font-size:13px;letter-spacing:.2em;text-transform:uppercase;
@@ -272,22 +272,13 @@
   }
 
 
-  /* ---- Invite line & RSVP phones ---- */
-  .invite-line{font-family:var(--serif);font-style:italic;font-size:clamp(17px,3vw,21px);
-    color:var(--olive);margin-top:26px;max-width:480px}
-  .d7{transition-delay:1s}
-  .rsvp-phones{text-align:center;margin:-22px 0 34px;font-size:13.5px;color:var(--sage-line)}
-  .rsvp-phones a{color:var(--cream);text-decoration:none;border-bottom:1px solid var(--olive-soft);padding-bottom:1px}
-  .rsvp-phones .sep{margin:0 10px;color:var(--olive-soft)}
-
-
   /* ---- Invite line ---- */
   .hero-invite{font-family:var(--serif);font-style:italic;font-size:clamp(17px,3.2vw,21px);
     color:var(--olive);margin-top:28px;max-width:36ch;line-height:1.5}
   .hero.has-photo .hero-invite{color:var(--cream-deep)}
   .hero-date{margin-top:10px}
   /* ---- RSVP phones ---- */
-  .rsvp-phones{text-align:center;font-size:13.5px;color:var(--sage-line);margin:-24px 0 32px;line-height:1.9}
+  .rsvp-phones{text-align:center;font-size:14px;color:var(--sage-line);margin:-20px 0 34px;line-height:2.1}
   .rsvp-phones a{color:var(--cream);text-decoration:none;border-bottom:1px solid var(--olive-soft)}
   /* ---- Vinyl music player ---- */
   .vinyl-wrap{position:fixed;left:14px;bottom:14px;z-index:90;
@@ -349,7 +340,6 @@
   <p class="eyebrow hero-anim d1" data-i="eyebrow">Παντρευόμαστε</p>
   <h1 class="names hero-anim d2">Μάριος <span class="amp">&amp;</span> Αγάπη</h1>
   <p class="hero-invite hero-anim d3">Με μεγάλη χαρά σας προσκαλούμε στον γάμο μας</p>
-  <p class="invite-line hero-anim d3">Με μεγάλη χαρά σας προσκαλούμε στον γάμο μας</p>
   <p class="hero-date hero-anim d4" data-i="date">Κυριακή, 27 Σεπτεμβρίου 2026</p>
   <p class="hero-place hero-anim d4" data-i="place">Χανιά, Κρήτη</p>
 
@@ -421,8 +411,10 @@
       <div id="rsvpForm">
         <h2 class="sec-title" data-i="rsvpTitle">Θα είστε εκεί;</h2>
         <p class="sec-sub" data-i="rsvpSub">Παρακαλούμε απαντήστε έως τις 27 Αυγούστου 2026</p>
-        <p class="rsvp-phones">Μάριος: <a href="tel:+306984955114">+30 698 495 5114</a> &nbsp;·&nbsp; Αγάπη: <a href="tel:+306985606122">+30 698 560 6122</a></p>
-        <p class="rsvp-phones"><a href="tel:+306984955114">Μάριος · +30 698 495 5114</a><span class="sep">—</span><a href="tel:+306985606122">Αγάπη · +30 698 560 6122</a></p>
+        <p class="rsvp-phones">
+          <a href="tel:+306984955114">Μάριος · +30 698 495 5114</a><br>
+          <a href="tel:+306985606122">Αγάπη · +30 698 560 6122</a>
+        </p>
 
         <div class="field">
           <label for="fName" data-i="fName">Ονοματεπώνυμο</label>
@@ -742,18 +734,24 @@ function downloadIcs(){
 /* ---------------- Vinyl music player ---------------- */
 (function(){
   const w=document.getElementById('vinyl'); if(!w) return;
-  const audio=new Audio('music.mp3'); audio.loop=true; audio.preload='none';
-  let ok=true;
-  audio.addEventListener('error',()=>{ ok=false; w.style.display='none'; });
+  const audio=new Audio('music.mp3'); audio.loop=true; audio.preload='metadata';
   const lab=w.querySelector('.vinyl-label');
+  let everPlayed=false;
+  audio.addEventListener('error',()=>{ if(!everPlayed && (!audio.error || audio.error.code===4)) w.style.display='none'; });
+  function setPlaying(on){
+    w.classList.toggle('playing', on);
+    lab.textContent = on ? 'Just the Two of Us \u266A' : 'Click to play music';
+  }
+  function tryPlay(retry){
+    const pr = audio.play();
+    if(pr && pr.then){
+      pr.then(()=>{ everPlayed=true; setPlaying(true); })
+        .catch(()=>{ if(retry){ audio.load(); setTimeout(()=>tryPlay(false), 250); } });
+    } else { everPlayed=true; setPlaying(true); }
+  }
   w.addEventListener('click',()=>{
-    if(!ok) return;
-    if(audio.paused){
-      audio.play().then(()=>{ w.classList.add('playing'); lab.textContent='Just the Two of Us \u266A'; })
-                  .catch(()=>{ ok=false; w.style.display='none'; });
-    } else {
-      audio.pause(); w.classList.remove('playing'); lab.textContent='Click to play music';
-    }
+    if(audio.paused){ tryPlay(true); }
+    else { audio.pause(); setPlaying(false); }
   });
 })();
 
