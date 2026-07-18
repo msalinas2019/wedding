@@ -634,7 +634,7 @@ async function submitRsvp(){
   try{
     const params = new URLSearchParams();
     params.append('entry.1711207157', entry.name);                       // Ονοματεπώνυμο
-    params.append('entry.890299819', entry.attending ? 'Ναι' : 'Όχι');  // Θα παρευρεθείτε;
+    params.append('entry.890299819', entry.attending ? 'Ναι' : 'Οχι');  // Θα παρευρεθείτε;
     params.append('entry.826449913', entry.attending ? String(entry.guests) : '0'); // Αριθμός ατόμων
     params.append('entry.572545468', entry.song);                        // Τραγούδι
     params.append('entry.1474643223', entry.message);                    // Μήνυμα
