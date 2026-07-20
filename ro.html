@@ -320,6 +320,14 @@
   .tl-icon svg{width:17px;height:17px;stroke:currentColor;fill:none;
     stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 
+
+  /* ---- Families ---- */
+  .fam-box{text-align:center}
+  .fam-name{font-family:var(--serif);font-size:clamp(19px,3.4vw,23px);
+    color:var(--olive-deep);line-height:1.75}
+  .fam-role{font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--olive-soft);margin:36px 0 10px}
+
   footer{padding:60px 0 40px;text-align:center}
   .monogram{
     font-family:var(--serif);font-style:italic;font-size:20px;
@@ -379,6 +387,17 @@
 
 <div class="wrap">
 
+  <!-- ============ FAMILIES ============ -->
+  <section id="families">
+    <div class="fam-box">
+      <p class="fam-role" style="margin-top:0">Familiile</p>
+      <p class="fam-name">Vlantislav &amp; Ala Salina</p>
+      <p class="fam-name">Nikolaos &amp; Athina Orfanoudaki</p>
+      <p class="fam-role">Nașa</p>
+      <p class="fam-name">Eleni Topsahalidi</p>
+    </div>
+  </section>
+
   <!-- ============ SAVE THE DATE ============ -->
   <section id="std">
     <h2 class="sec-title" data-i="mediaTitle">Save the Date</h2>
@@ -403,28 +422,15 @@
         <div class="tl-where">Băuturi de întâmpinare la Ktima Alkyon, Platanias</div>
       </div>
       <div class="tl-item">
-        <span class="tl-icon"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="6.6"/><circle cx="9" cy="9" r="2.6"/></svg></span>
-        <div class="tl-time">20:30</div>
-        <div class="tl-what">Cina</div>
-        <div class="tl-where">Ktima Alkyon</div>
-      </div>
-      <div class="tl-item">
         <span class="tl-icon"><svg viewBox="0 0 18 18"><path d="M7 13.5V4.2l7-1.6v9.3"/><circle cx="5.3" cy="13.7" r="1.7"/><circle cx="12.3" cy="12" r="1.7"/></svg></span>
         <div class="tl-time">21:30</div>
-        <div class="tl-what">Muzică cretană & din insule</div>
-        <div class="tl-where">Cu trupă cretană live</div>
-      </div>
-      <div class="tl-item">
-        <span class="tl-icon"><svg viewBox="0 0 18 18"><path d="M3.5 12v-2a5.5 5.5 0 0 1 11 0v2"/><rect x="2.4" y="10.8" width="3" height="4.6" rx="1"/><rect x="12.6" y="10.8" width="3" height="4.6" rx="1"/></svg></span>
-        <div class="tl-time">23:30</div>
-        <div class="tl-what">Muzică grecească & moldovenească</div>
-        <div class="tl-where">Melodii tradiționale — DJ set</div>
+        <div class="tl-what">Dansuri tradiționale</div>
+        <div class="tl-where">Cântece cretane, din insule, din Rumelia și moldovenești</div>
       </div>
       <div class="tl-item">
         <span class="tl-icon"><svg viewBox="0 0 18 18"><path d="M9 2.5l1.3 3.5 3.5 1.3-3.5 1.3L9 12.1 7.7 8.6 4.2 7.3l3.5-1.3L9 2.5z"/><path d="M14.5 13.5v3M13 15h3M4 13.8v2.4M2.8 15h2.4"/></svg></span>
-        <div class="tl-time">00:30</div>
+        <div class="tl-time">00:00</div>
         <div class="tl-what">Petrecerea</div>
-        <div class="tl-where">Dans până dimineața!</div>
       </div>
     </div>
   </section>
@@ -770,7 +776,7 @@ function downloadIcs(){
 
 /* ---------------- Scroll reveal ---------------- */
 (function(){
-  const els=document.querySelectorAll('section .sec-title, section .sec-sub, .timeline, .venues, .rsvp-card, .std-photo');
+  const els=document.querySelectorAll('section .sec-title, section .sec-sub, .timeline, .venues, .rsvp-card, .std-photo, .fam-box');
   els.forEach(el=>el.classList.add('rv'));
   const io=new IntersectionObserver(entries=>entries.forEach(en=>{
     if(en.isIntersecting){ en.target.classList.add('vis'); io.unobserve(en.target); }
